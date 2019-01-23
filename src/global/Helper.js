@@ -7,7 +7,16 @@ import _ from 'lodash';
 export default {
 
   fetch( url ) {
-    return axios.post( url, IntrospectionQuery )
+    console.log(localStorage.getItem('id_token'))
+    const token = localStorage.getItem('id_token')
+
+    const headers = {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    }
+
+    return axios.post( url, IntrospectionQuery, headers )
       .then( response => {
         Store.set( 'url', url );
         Store.set( 'raw', response.data.data.__schema );

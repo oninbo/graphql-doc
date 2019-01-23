@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Input, Spin, message, Alert } from 'antd';
+import { Button, Spin, message, Alert } from 'antd';
 import Helper from 'global/Helper';
-import QueryString from 'query-string';
 import { withRouter } from 'react-router-dom';
-import IntrospectionQuery from 'global/IntrospectionQuery';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
-
 
 class URLEntryForm extends Component {
 
@@ -20,7 +16,6 @@ class URLEntryForm extends Component {
       response: '',
       response_error: false,
     }
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fetchSchema = this.fetchSchema.bind(this);
     this.handleErrorClose = this.handleErrorClose.bind(this);
@@ -30,14 +25,8 @@ class URLEntryForm extends Component {
     this.handleResponseErrorClose = this.handleResponseErrorClose.bind(this);
   }
 
-
-  handleChange(e) {
-    this.setState({ url: e.target.value });
-  }
-
   handleSubmit() {
-    let query = QueryString.parse( this.props.location.search );
-    const url = this.state.url || query.endpoint;
+    const url = 'http://83.69.126.22:5820/graphql';
 
     if ( ! url ) {
       message.info('Please Enter A Valid GraphQL URL Endpoint');
@@ -61,16 +50,12 @@ class URLEntryForm extends Component {
 
   }
 
-
-
   handleErrorClose() {
     this.setState({ error: false, errMessage: '', })
   }
   handleResponseErrorClose() {
     this.setState({ response_error: false })
   }
-
-
 
   handleChangeResponse(e) {
     this.setState({ response: e.target.value });
@@ -91,22 +76,14 @@ class URLEntryForm extends Component {
   }
 
 
-
-
-
-
-
-
   render() {
-
-    let query = QueryString.parse( this.props.location.search );
 
     return (
       <div>
       <Spin spinning={ this.state.loading }>
       <div className="component--dashboard-container">
         <div className="inner">
-          <h1>Please enter a valid GraphQL Server Endpoint Below</h1>
+          <h1>Please сlick to generate documentation</h1>
 
           { this.state.error &&
             <div style={{ marginTop: 25, marginBottom: 25 }}>
@@ -121,7 +98,6 @@ class URLEntryForm extends Component {
           }
 
           <div style={{ marginTop: 25 }}>
-            <input name="url" placeholder="https://graphql.api.com" defaultValue={ query.endpoint } onChange={ this.handleChange } className="url" />
             <div style={{ marginTop: 5 }}>
               <Button type="primary" ghost size="large" icon="check" onClick={ this.handleSubmit }>Generate Documentation</Button>
             </div>
@@ -130,43 +106,6 @@ class URLEntryForm extends Component {
         </div>
       </div>
       </Spin>
-
-
-      <div style={{ marginTop: 20 }}>
-      <Spin spinning={ this.state.loadingIR }>
-      <div className="component--dashboard-container">
-        <div className="inner">
-          <h1>Please enter The Response Of Introspection Query below</h1>
-
-          <div style={{ marginTop: 15, marginBottom: 15 }}>
-          <CopyToClipboard text={ IntrospectionQuery.query } onCopy={ () => message.info('Copied!') }>
-            <Button type="primary">Copy Introspection Query to Clipboard</Button>
-          </CopyToClipboard>
-          </div>
-
-
-          { this.state.response_error &&
-            <div style={{ marginTop: 25, marginBottom: 25 }}>
-              <Alert
-                message="Error Occoured"
-                description="Invalid JSON Detected. Please enter valid JSON response."
-                type="error"
-                closable
-                onClose={ this.handleResponseErrorClose }
-              />
-            </div>
-          }
-
-          <Input type="textarea" name="url" placeholder="Run this query and enter response here" onChange={ this.handleChangeResponse } autosize={{ minRows: 4, maxRows: 10 }} />
-          <div style={{ marginTop: 5 }}>
-            <Button type="primary" ghost size="large" icon="check" onClick={ this.handleSubmitResponse }>Generate Documentation</Button>
-          </div>
-
-        </div>
-      </div>
-      </Spin>
-      </div>
-
       </div>
     );
   }

@@ -16,6 +16,7 @@ import DashboardPage from 'ui/common/Dashboard';
 import IntrospectPage from 'ui/introspect/Introspect';
 import PageNotFound from 'ui/common/NotFound';
 import InfoModal from 'ui/introspect/InfoModal';
+import Login from 'ui/common/Login'
 
 import DevPage from 'ui/common/Dev';
 
@@ -51,7 +52,7 @@ ReactDOM.render(
   <Router history={history}>
     <DefaultLayout>
       <Switch>
-        <Route exact path="/" component={ DashboardPage } />
+        <Route exact path="/" component={Login} />
         <Route exact path="/dashboard" component={ DashboardPage } />
         <Route exact path="/dev" component={ DevPage } />
         <Route path="/introspect" component={ IntrospectRoutes } />

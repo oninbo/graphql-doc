@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Helper from 'global/Helper';
 import Store from 'global/Store';
-import { Button, Tag, AutoComplete } from 'antd';
+import { Tag, AutoComplete } from 'antd';
 import { withRouter } from 'react-router-dom';
 
 import Card from 'components/Card';
@@ -20,24 +20,13 @@ class Documentation extends Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleOnSearch = this.handleOnSearch.bind(this);
     this.onSelect = this.onSelect.bind(this);
-    this.resetEndpoint = this.resetEndpoint.bind(this);
   }
-
-
-
-  resetEndpoint() {
-    Store.reset();
-    this.props.update({ schema: false });
-    this.props.history.push('/introspect');
-  }
-
 
   handleFilterChange(e) {
     const value = e.target.value;
     const filteredSchema = Helper.filter( value );
     this.setState({ schema: filteredSchema });
   }
-
 
   onSelect( value ) {
     this.props.history.push(`/introspect/info?name=${ value }`)
@@ -47,7 +36,6 @@ class Documentation extends Component {
     const filteredSchema = Helper.filter( value );
     this.setState({ schema: filteredSchema });
   }
-
 
   render() {
 
@@ -76,9 +64,6 @@ class Documentation extends Component {
               return type.fields.map( field => <Option key={`${type.name}/${field.name}`}>{`${ type.name }/${ field.name }`}</Option> )
             } ) }
             </AutoComplete>
-          </div>
-          <div className="nav">
-            <Button type="danger" onClick={ this.resetEndpoint }>Document New Endpoint</Button>
           </div>
         </header>
 

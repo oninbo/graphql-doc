@@ -1,0 +1,16 @@
+version: '2'
+services:
+  graphql_doc:
+    build: .
+    container_name:
+      graphql_doc
+    image: graphql_doc
+    command: yarn start
+    ports:
+      - "5824:3000"
+    restart: always
+
+
+
+
+
