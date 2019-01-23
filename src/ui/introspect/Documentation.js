@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Helper from 'global/Helper';
 import Store from 'global/Store';
-import { Tag, AutoComplete } from 'antd';
+import { Button, Tag, AutoComplete } from 'antd';
 import { withRouter } from 'react-router-dom';
+import AuthService from 'ui/common/AuthService';
+
 
 import Card from 'components/Card';
 const Option = AutoComplete.Option;
@@ -20,13 +22,26 @@ class Documentation extends Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.handleOnSearch = this.handleOnSearch.bind(this);
     this.onSelect = this.onSelect.bind(this);
+    this.logout = this.logout.bind(this);
+    this.Auth = new AuthService();
   }
+
+
+
+  logout() {
+    Store.reset();
+    this.props.update({ schema: false });
+    this.Auth.logout();
+    this.props.history.push('/');
+  }
+
 
   handleFilterChange(e) {
     const value = e.target.value;
     const filteredSchema = Helper.filter( value );
     this.setState({ schema: filteredSchema });
   }
+
 
   onSelect( value ) {
     this.props.history.push(`/introspect/info?name=${ value }`)
@@ -36,6 +51,7 @@ class Documentation extends Component {
     const filteredSchema = Helper.filter( value );
     this.setState({ schema: filteredSchema });
   }
+
 
   render() {
 
@@ -64,6 +80,9 @@ class Documentation extends Component {
               return type.fields.map( field => <Option key={`${type.name}/${field.name}`}>{`${ type.name }/${ field.name }`}</Option> )
             } ) }
             </AutoComplete>
+          </div>
+          <div className="nav">
+            <Button type="danger" onClick={ this.logout }>Logout</Button>
           </div>
         </header>
 
