@@ -37,8 +37,8 @@ export default class AuthService {
 
     loggedIn() {
         // Checks if there is a saved token and it's still valid
-        const token = this.getToken() // GEtting token from localstorage
-        return !!token // handwaiving here
+        const token = this.getToken() // Getting token from local storage
+        return !!token // handwaving here
     }
 
     getToken() {

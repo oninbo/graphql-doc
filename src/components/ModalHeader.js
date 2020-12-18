@@ -10,8 +10,78 @@ const Header = (props) => {
       <div className="info">
         <div className="title">{ props.title }</div>
         <div className="subtitle">
-          { props.type.kind && <span>Kind: <Tag color="blue">{props.type.kind}</Tag></span> }
-          { props.type.name && <span>Type: <Tag color="#607D8B"><Link to={`/introspect/info?name=${props.type.name}`}>{props.type.name}</Link></Tag></span> }
+          {
+            <span>
+	      Kind:
+	      {
+                props.type.kind &&
+                  <Tag color="blue">{ props.type.kind }</Tag>
+	      }
+              {
+                props.type.ofType &&
+                  props.type.ofType.kind &&
+                  <Tag color="blue">{ props.type.ofType.kind }</Tag>
+              }
+              {
+                props.type.ofType &&
+                  props.type.ofType.ofType &&
+                  props.type.ofType.ofType.kind &&
+                  <Tag color="blue">{ props.type.ofType.ofType.kind }</Tag>
+              }
+              {
+                props.type.ofType &&
+                  props.type.ofType.ofType &&
+                  props.type.ofType.ofType.ofType &&
+                  props.type.ofType.ofType.ofType.kind &&
+                  <Tag color="blue">
+                    { props.type.ofType.ofType.ofType.kind }
+                  </Tag>
+              }
+            </span>
+          }
+          {
+            <span>
+              Type:
+              {
+                props.type.name &&
+                  <Tag color="#607D8B">
+                    <Link to={ `/introspect/info?name=${ props.type.name }` }>
+                      { props.type.name }
+                    </Link>
+                  </Tag>
+              }
+              {
+                props.type.ofType &&
+                  props.type.ofType.name &&
+                  <Tag color="#607D8B">
+                    <Link to={ `/introspect/info?name=${ props.type.ofType.name }` }>
+                      { props.type.ofType.name }
+                    </Link>
+                  </Tag>
+              }
+              {
+                props.type.ofType &&
+                  props.type.ofType.ofType &&
+                  props.type.ofType.ofType.name &&
+                  <Tag color="#607D8B">
+                    <Link to={ `/introspect/info?name=${ props.type.ofType.ofType.name }` }>
+                      { props.type.ofType.ofType.name }
+                    </Link>
+                  </Tag>
+              }
+              {
+                props.type.ofType &&
+                  props.type.ofType.ofType &&
+                  props.type.ofType.ofType.ofType &&
+                  props.type.ofType.ofType.ofType.name &&
+                  <Tag color="#607D8B">
+                    <Link to={ `/introspect/info?name=${ props.type.ofType.ofType.ofType.name }` }>
+                      { props.type.ofType.ofType.ofType.name }
+                    </Link>
+                  </Tag>
+              }
+            </span>
+          }
         </div>
       </div>
     </header>

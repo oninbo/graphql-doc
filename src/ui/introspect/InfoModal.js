@@ -52,6 +52,16 @@ class InfoModal extends Component {
     return typeName;
   }
 
+  findType(record) {
+    let type = {};
+    if (record.kind) {
+      type = record;
+    } else {
+      type = record.type;
+    }
+    return type;
+  }
+
 
   showTypeKindDescription( data ) {
     return (
@@ -96,10 +106,7 @@ class InfoModal extends Component {
     return (
       <ModalLayout
         title={ record.name }
-        type={{
-          kind: this.findTypeKind(record),
-          name: this.findTypeName(record)
-        }}
+        type={ this.findType(record) }
       >
         <div className="modal__container">
 
@@ -158,7 +165,7 @@ class InfoModal extends Component {
                   <div className="list--item" key={ field.name }>
                     <div className="key">{ field.name }</div>
                     <div className="value">
-                      { field.defaultValue && <p>Defaullt Value: { field.defaultValue }</p> }
+                      { field.defaultValue && <p>Default Value: { field.defaultValue }</p> }
                       { this.showTypeKindDescription( field ) }
                     </div>
                   </div>
@@ -189,7 +196,7 @@ class InfoModal extends Component {
 
             { record.args && record.args.length > 0 &&
             <div style={{ marginBottom: 20 }}>
-              <div className="heading">Arguements</div>
+              <div className="heading">Arguments</div>
               { record.args.map( arg => {
                 return (
                   <div className="list--item" key={ arg.name }>

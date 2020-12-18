@@ -83,12 +83,12 @@ class URLEntryForm extends Component {
       <Spin spinning={ this.state.loading }>
       <div className="component--dashboard-container">
         <div className="inner">
-          <h1>Please сlick to generate documentation</h1>
+          <h1>Please click to generate documentation</h1>
 
           { this.state.error &&
             <div style={{ marginTop: 25, marginBottom: 25 }}>
               <Alert
-                message="Error Occoured"
+                message="Error Occurred"
                 description={ this.state.errMessage.message }
                 type="error"
                 closable
